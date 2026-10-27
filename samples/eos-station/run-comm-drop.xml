@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="43" time="40.372" timestamp="2026-10-15T16:47:45.717644-04:00" hostname="bench-02"><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az0_el0]" time="1.022" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az45_el10]" time="0.616" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-120_el60]" time="0.807" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az169.9_el-29.9]" time="0.841" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-169.9_el89.9]" time="0.843" /><testcase classname="tests.component.test_gimbal" name="test_slew_time_90_degrees" time="0.806"><failure message="AssertionError: 90 deg azimuth slew time = 2.03 s is outside limits &lt;= 2">sensor = &lt;test_station.driver.EOSensor object at 0x0000023683124290&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x000002368343AFC0&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-022")
+    def test_slew_time_90_degrees(sensor, measure):
+        sensor.home()
+        sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+        start = time.monotonic()
+        sensor.write("GIMB:AZ 90")
+        sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+        elapsed = (time.monotonic() - start) * sensor.time_scale
+&gt;       measure("90 deg azimuth slew time", elapsed, high=limits.SLEW_90_MAX_S, units="s")
+
+tests\component\test_gimbal.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = '90 deg azimuth slew time', value = 2.029999999977008, low = None
+high = 2.0, units = 's'
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: 90 deg azimuth slew time = 2.03 s is outside limits &lt;= 2
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ 170.1]" time="0.808" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ -180]" time="0.809" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL -30.5]" time="0.812" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL 91]" time="0.809" /><testcase classname="tests.component.test_gimbal" name="test_return_to_home[GIMB:HOME]" time="0.824" /><testcase classname="tests.component.test_gimbal" name="test_return_to_home[*RST]" time="1.027" /><testcase classname="tests.component.test_identity_and_interface" name="test_identity_fields" time="0.408" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[*IDN?]" time="0.418" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[SYST:STAT?]" time="0.420" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[MEAS:VOLT?]" time="0.404" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[GIMB:POS?]" time="0.406" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[BOGUS]" time="0.405" /><testcase classname="tests.component.test_identity_and_interface" name="test_error_queue_is_fifo_and_clears" time="1.012" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[1]" time="0.420" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[8]" time="0.606" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[16]" time="0.405" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[0.1]" time="0.606" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[33.3]" time="0.406" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[100.0]" time="0.608" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 0]" time="0.404" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 17]" time="0.418" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 2.5]" time="0.405" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 0.05]" time="0.409" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 100.1]" time="0.406" /><testcase classname="tests.component.test_imager" name="test_dead_pixel_count" time="0.834" /><testcase classname="tests.component.test_imager" name="test_frame_crc" time="1.214" /><testcase classname="tests.component.test_imager" name="test_exposure_linearity" time="1.620" /><testcase classname="tests.component.test_power" name="test_boot_time" time="0.810" /><testcase classname="tests.component.test_power" name="test_commands_rejected_while_off_and_booting" time="0.813"><failure message="Failed: DID NOT RAISE DeviceError">powered_off = &lt;test_station.driver.EOSensor object at 0x0000023683124290&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-004")
+    def test_commands_rejected_while_off_and_booting(powered_off):
+        with pytest.raises(DeviceError) as off:
+            powered_off.voltage()
+        assert off.value.code == limits.NOT_POWERED
+    
+        powered_off.power_on()
+&gt;       with pytest.raises(DeviceError) as booting:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DeviceError
+
+tests\component\test_power.py:32: Failed</failure></testcase><testcase classname="tests.component.test_power" name="test_built_in_self_test_passes" time="0.418" /><testcase classname="tests.component.test_power" name="test_bus_voltage" time="0.821" /><testcase classname="tests.component.test_power" name="test_peak_current_during_cooldown_and_slew" time="2.842" /><testcase classname="tests.component.test_thermal" name="test_cooldown_time_and_setpoint" time="1.503" /><testcase classname="tests.component.test_thermal" name="test_temperature_stability" time="2.773"><failure message="AssertionError: samples taken = 8  is outside limits &gt;= 10">sensor = &lt;test_station.driver.EOSensor object at 0x0000023683124290&gt;
+cold_start = 25952.64
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000236834C5940&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-011")
+    def test_temperature_stability(sensor, cold_start, measure):
+        sensor.wait_cooler_ready(timeout_s=limits.COOLDOWN_MAX_S * 2)
+        samples = []
+        end = time.monotonic() + limits.STABILITY_WINDOW_S / sensor.time_scale
+        while time.monotonic() &lt; end:
+            samples.append(sensor.temperature())
+            sensor.sleep(0.5)
+        low, high = limits.cooler_band()
+&gt;       measure("samples taken", len(samples), low=10)
+
+tests\component\test_thermal.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'samples taken', value = 8, low = 10, high = None, units = ''
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: samples taken = 8  is outside limits &gt;= 10
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.system.test_operational_scenarios" name="test_cold_start_to_imaging_mission" time="4.151" /><testcase classname="tests.system.test_operational_scenarios" name="test_current_stays_in_budget_while_scanning_and_imaging" time="2.438" /><testcase classname="tests.system.test_operational_scenarios" name="test_power_cycle_restores_defaults" time="1.427" /></testsuite></testsuites>

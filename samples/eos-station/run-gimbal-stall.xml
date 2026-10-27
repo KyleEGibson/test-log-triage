@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="15" skipped="0" tests="43" time="17.449" timestamp="2026-10-15T16:46:57.388610-04:00" hostname="bench-02"><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az0_el0]" time="0.216" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az45_el10]" time="1.023"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A14DA7A0&gt;
+azimuth = 45, elevation = 10
+
+    @pytest.mark.req("SYS-020", "SYS-021")
+    @pytest.mark.parametrize("azimuth, elevation", POINTS, ids=[f"az{a}_el{e}" for a, e in POINTS])
+    def test_pointing_accuracy(sensor, measure, azimuth, elevation):
+        sensor.point(azimuth, elevation)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-120_el60]" time="1.022"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A153B6A0&gt;
+azimuth = -120, elevation = 60
+
+    @pytest.mark.req("SYS-020", "SYS-021")
+    @pytest.mark.parametrize("azimuth, elevation", POINTS, ids=[f"az{a}_el{e}" for a, e in POINTS])
+    def test_pointing_accuracy(sensor, measure, azimuth, elevation):
+        sensor.point(azimuth, elevation)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az169.9_el-29.9]" time="1.004"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A153B7E0&gt;
+azimuth = 169.9, elevation = -29.9
+
+    @pytest.mark.req("SYS-020", "SYS-021")
+    @pytest.mark.parametrize("azimuth, elevation", POINTS, ids=[f"az{a}_el{e}" for a, e in POINTS])
+    def test_pointing_accuracy(sensor, measure, azimuth, elevation):
+        sensor.point(azimuth, elevation)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-169.9_el89.9]" time="1.016"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A153BA60&gt;
+azimuth = -169.9, elevation = 89.9
+
+    @pytest.mark.req("SYS-020", "SYS-021")
+    @pytest.mark.parametrize("azimuth, elevation", POINTS, ids=[f"az{a}_el{e}" for a, e in POINTS])
+    def test_pointing_accuracy(sensor, measure, azimuth, elevation):
+        sensor.point(azimuth, elevation)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_slew_time_90_degrees" time="1.024"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A153B740&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-022")
+    def test_slew_time_90_degrees(sensor, measure):
+        sensor.home()
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ 170.1]" time="1.006"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:AZ 170.1'
+
+    @pytest.mark.req("SYS-023")
+    @pytest.mark.parametrize("command", BAD_COMMANDS)
+    def test_travel_limits_rejected(sensor, command):
+        sensor.point(10, 10)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ -180]" time="1.015"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:AZ -180'
+
+    @pytest.mark.req("SYS-023")
+    @pytest.mark.parametrize("command", BAD_COMMANDS)
+    def test_travel_limits_rejected(sensor, command):
+        sensor.point(10, 10)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL -30.5]" time="1.016"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:EL -30.5'
+
+    @pytest.mark.req("SYS-023")
+    @pytest.mark.parametrize("command", BAD_COMMANDS)
+    def test_travel_limits_rejected(sensor, command):
+        sensor.point(10, 10)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL 91]" time="1.017"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:EL 91'
+
+    @pytest.mark.req("SYS-023")
+    @pytest.mark.parametrize("command", BAD_COMMANDS)
+    def test_travel_limits_rejected(sensor, command):
+        sensor.point(10, 10)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_return_to_home[GIMB:HOME]" time="1.023"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A0540&gt;
+command = 'GIMB:HOME'
+
+    @pytest.mark.req("SYS-024")
+    @pytest.mark.parametrize("command", ["GIMB:HOME", "*RST"])
+    def test_return_to_home(sensor, measure, command):
+        sensor.point(-60, 45)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_gimbal" name="test_return_to_home[*RST]" time="1.005"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A05E0&gt;
+command = '*RST'
+
+    @pytest.mark.req("SYS-024")
+    @pytest.mark.parametrize("command", ["GIMB:HOME", "*RST"])
+    def test_return_to_home(sensor, measure, command):
+        sensor.point(-60, 45)
+&gt;       sensor.wait_gimbal_idle(SETTLE_TIMEOUT_S)
+
+tests\component\test_gimbal.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase><testcase classname="tests.component.test_identity_and_interface" name="test_identity_fields" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[*IDN?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[SYST:STAT?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[MEAS:VOLT?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[GIMB:POS?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[BOGUS]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_error_queue_is_fifo_and_clears" time="0.002" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[8]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[16]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[0.1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[33.3]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[100.0]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 0]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 17]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 2.5]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 0.05]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 100.1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_dead_pixel_count" time="0.002" /><testcase classname="tests.component.test_imager" name="test_frame_crc" time="0.003" /><testcase classname="tests.component.test_imager" name="test_exposure_linearity" time="0.003" /><testcase classname="tests.component.test_power" name="test_boot_time" time="0.191" /><testcase classname="tests.component.test_power" name="test_commands_rejected_while_off_and_booting" time="0.002" /><testcase classname="tests.component.test_power" name="test_built_in_self_test_passes" time="0.203"><failure message="AssertionError: BIT result = 2  is outside limits 0 .. 0">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A1BC0&gt;
+
+    @pytest.mark.req("SYS-003")
+    def test_built_in_self_test_passes(sensor, measure):
+&gt;       measure("BIT result", sensor.self_test(), low=0, high=0)
+
+tests\component\test_power.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'BIT result', value = 2, low = 0, high = 0, units = ''
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: BIT result = 2  is outside limits 0 .. 0
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.component.test_power" name="test_bus_voltage" time="0.002" /><testcase classname="tests.component.test_power" name="test_peak_current_during_cooldown_and_slew" time="0.192" /><testcase classname="tests.component.test_thermal" name="test_cooldown_time_and_setpoint" time="0.984" /><testcase classname="tests.component.test_thermal" name="test_temperature_stability" time="1.993" /><testcase classname="tests.system.test_operational_scenarios" name="test_cold_start_to_imaging_mission" time="0.192"><failure message="AssertionError: BIT result = 2  is outside limits 0 .. 0">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A2480&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-002", "SYS-003", "SYS-010", "SYS-020", "SYS-021", "SYS-031", "SYS-033")
+    def test_cold_start_to_imaging_mission(sensor, measure):
+        """Cold start, wait for the cooler, then run a five-point scan with a capture at each point."""
+        sensor.power_off()
+        sensor.power_on()
+        powered_at = time.monotonic()
+        measure("time to READY", sensor.wait_until_ready(timeout_s=10.0), high=limits.BOOT_TIME_MAX_S, units="s")
+&gt;       measure("BIT result", sensor.self_test(), low=0, high=0)
+
+tests\system\test_operational_scenarios.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'BIT result', value = 2, low = 0, high = 0, units = ''
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: BIT result = 2  is outside limits 0 .. 0
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.system.test_operational_scenarios" name="test_current_stays_in_budget_while_scanning_and_imaging" time="1.015"><failure message="TimeoutError: gimbal did not settle at (-150, 0)">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A2CA0&gt;
+
+    @pytest.mark.req("SYS-006", "SYS-022")
+    def test_current_stays_in_budget_while_scanning_and_imaging(sensor, measure):
+        peak = 0.0
+        for azimuth, elevation in [(-150, 0), (150, 85), (0, -25), (0, 0)]:
+            sensor.point(azimuth, elevation)
+            deadline = time.monotonic() + 10.0 / sensor.time_scale
+            while sensor.query("GIMB:STAT?") == "MOVING":
+                if time.monotonic() &gt; deadline:
+&gt;                   raise TimeoutError(f"gimbal did not settle at ({azimuth}, {elevation})")
+E                   TimeoutError: gimbal did not settle at (-150, 0)
+
+tests\system\test_operational_scenarios.py:49: TimeoutError</failure></testcase><testcase classname="tests.system.test_operational_scenarios" name="test_power_cycle_restores_defaults" time="1.015"><failure message="TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s">sensor = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000254A15A2C00&gt;
+
+    @pytest.mark.req("SYS-007")
+    def test_power_cycle_restores_defaults(sensor, measure):
+        sensor.set_gain(12)
+        sensor.set_exposure(55)
+        sensor.point(100, 45)
+&gt;       sensor.wait_gimbal_idle(timeout_s=10.0)
+
+tests\system\test_operational_scenarios.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\test_station\driver.py:230: in wait_gimbal_idle
+    return self._poll("GIMB:STAT?", "IDLE", timeout_s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;test_station.driver.EOSensor object at 0x00000254A11A5E50&gt;
+command = 'GIMB:STAT?', expected = 'IDLE', timeout_s = 10.0
+
+    def _poll(self, command: str, expected: str, timeout_s: float) -&gt; float:
+        """Poll until ``command`` returns ``expected``; return elapsed device seconds."""
+        start = time.monotonic()
+        deadline = start + timeout_s / self.time_scale
+        while True:
+            if self.query(command) == expected:
+                return (time.monotonic() - start) * self.time_scale
+            if time.monotonic() &gt; deadline:
+&gt;               raise TimeoutError(f"{command} did not return {expected} within {timeout_s} s")
+E               TimeoutError: GIMB:STAT? did not return IDLE within 10.0 s
+
+src\test_station\driver.py:158: TimeoutError</failure></testcase></testsuite></testsuites>

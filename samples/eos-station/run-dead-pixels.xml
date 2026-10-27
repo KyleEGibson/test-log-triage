@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="43" time="8.070" timestamp="2026-10-15T16:47:25.641264-04:00" hostname="bench-02"><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az0_el0]" time="0.214" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az45_el10]" time="0.076" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-120_el60]" time="0.275" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az169.9_el-29.9]" time="0.487" /><testcase classname="tests.component.test_gimbal" name="test_pointing_accuracy[az-169.9_el89.9]" time="0.582" /><testcase classname="tests.component.test_gimbal" name="test_slew_time_90_degrees" time="0.446" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ 170.1]" time="0.138" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:AZ -180]" time="0.001" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL -30.5]" time="0.001" /><testcase classname="tests.component.test_gimbal" name="test_travel_limits_rejected[GIMB:EL 91]" time="0.001" /><testcase classname="tests.component.test_gimbal" name="test_return_to_home[GIMB:HOME]" time="0.232" /><testcase classname="tests.component.test_gimbal" name="test_return_to_home[*RST]" time="0.224" /><testcase classname="tests.component.test_identity_and_interface" name="test_identity_fields" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[*IDN?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[SYST:STAT?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[MEAS:VOLT?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[GIMB:POS?]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_every_response_carries_checksum[BOGUS]" time="0.001" /><testcase classname="tests.component.test_identity_and_interface" name="test_error_queue_is_fifo_and_clears" time="0.002" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[8]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_gain_accepted[16]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[0.1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[33.3]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_valid_exposure_accepted[100.0]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 0]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 17]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:GAIN 2.5]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 0.05]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_out_of_range_imager_settings_rejected[IMG:EXP 100.1]" time="0.001" /><testcase classname="tests.component.test_imager" name="test_dead_pixel_count" time="0.002"><failure message="AssertionError: worst-case dead pixels (5 frames) = 147 px is outside limits &lt;= 5">sensor = &lt;test_station.driver.EOSensor object at 0x00000275AAD9C290&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000275AB124AE0&gt;
+
+    @pytest.mark.req("SYS-031")
+    def test_dead_pixel_count(sensor, measure):
+        frames = [sensor.capture() for _ in range(5)]
+&gt;       measure("worst-case dead pixels (5 frames)", max(f.dead_pixels for f in frames),
+                high=limits.DEAD_PIXELS_MAX, units="px")
+
+tests\component\test_imager.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'worst-case dead pixels (5 frames)', value = 147, low = None, high = 5
+units = 'px'
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: worst-case dead pixels (5 frames) = 147 px is outside limits &lt;= 5
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.component.test_imager" name="test_frame_crc" time="0.003" /><testcase classname="tests.component.test_imager" name="test_exposure_linearity" time="0.003" /><testcase classname="tests.component.test_power" name="test_boot_time" time="0.203" /><testcase classname="tests.component.test_power" name="test_commands_rejected_while_off_and_booting" time="0.001" /><testcase classname="tests.component.test_power" name="test_built_in_self_test_passes" time="0.202"><failure message="AssertionError: BIT result = 4  is outside limits 0 .. 0">sensor = &lt;test_station.driver.EOSensor object at 0x00000275AAD9C290&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000275AB14A3E0&gt;
+
+    @pytest.mark.req("SYS-003")
+    def test_built_in_self_test_passes(sensor, measure):
+&gt;       measure("BIT result", sensor.self_test(), low=0, high=0)
+
+tests\component\test_power.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'BIT result', value = 4, low = 0, high = 0, units = ''
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: BIT result = 4  is outside limits 0 .. 0
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.component.test_power" name="test_bus_voltage" time="0.002" /><testcase classname="tests.component.test_power" name="test_peak_current_during_cooldown_and_slew" time="0.214" /><testcase classname="tests.component.test_thermal" name="test_cooldown_time_and_setpoint" time="0.980" /><testcase classname="tests.component.test_thermal" name="test_temperature_stability" time="1.996" /><testcase classname="tests.system.test_operational_scenarios" name="test_cold_start_to_imaging_mission" time="0.203"><failure message="AssertionError: BIT result = 4  is outside limits 0 .. 0">sensor = &lt;test_station.driver.EOSensor object at 0x00000275AAD9C290&gt;
+measure = &lt;function measure.&lt;locals&gt;._measure at 0x00000275AB14A340&gt;
+
+    @pytest.mark.timing
+    @pytest.mark.req("SYS-002", "SYS-003", "SYS-010", "SYS-020", "SYS-021", "SYS-031", "SYS-033")
+    def test_cold_start_to_imaging_mission(sensor, measure):
+        """Cold start, wait for the cooler, then run a five-point scan with a capture at each point."""
+        sensor.power_off()
+        sensor.power_on()
+        powered_at = time.monotonic()
+        measure("time to READY", sensor.wait_until_ready(timeout_s=10.0), high=limits.BOOT_TIME_MAX_S, units="s")
+&gt;       measure("BIT result", sensor.self_test(), low=0, high=0)
+
+tests\system\test_operational_scenarios.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'BIT result', value = 4, low = 0, high = 0, units = ''
+
+    def _measure(name: str, value: float, low: float | None = None,
+                 high: float | None = None, units: str = "") -&gt; float:
+        record = Measurement(name, float(value), low, high, units)
+        records.append(record)
+        if not record.passed:
+&gt;           raise AssertionError(f"{name} = {value:g} {units} is outside limits {record.limits_text()}")
+E           AssertionError: BIT result = 4  is outside limits 0 .. 0
+
+src\test_station\plugin.py:187: AssertionError</failure></testcase><testcase classname="tests.system.test_operational_scenarios" name="test_current_stays_in_budget_while_scanning_and_imaging" time="1.035" /><testcase classname="tests.system.test_operational_scenarios" name="test_power_cycle_restores_defaults" time="0.383" /></testsuite></testsuites>

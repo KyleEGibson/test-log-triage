@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "test-log-triage"
+version = "1.0.0"
+description = "Group failing test results by root cause, label them, and (optionally) ask Claude for a cause hypothesis"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Kyle Gibson" }]
+dependencies = ["scikit-learn>=1.4", "numpy>=1.26", "pyyaml>=6.0", "jinja2>=3.1"]
+
+[project.optional-dependencies]
+llm = ["anthropic>=1,<2"]
+dev = ["pytest>=8.0", "anthropic>=1,<2"]
+
+[project.scripts]
+triage = "triage.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["templates/*.j2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

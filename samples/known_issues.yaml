@@ -1,0 +1,19 @@
+# Known issues registry. A cluster whose signature or sample messages match a
+# pattern is labeled with the issue; a match on a *fixed* issue is flagged as a
+# regression (and `triage run --fail-on-regression` exits 2).
+# IDs refer to the defect tracker (github.com/KyleEGibson/defect-tracker).
+
+- id: DEF-0041
+  title: Gimbal motor lot G-2603 slews slowly
+  pattern: "GIMB:STAT\\? did not return IDLE|azimuth slew time .* outside limits|gimbal did not settle"
+  status: open
+
+- id: DEF-0017
+  title: BENCH-02 bus voltage calibration drift
+  pattern: "bus voltage .* outside limits"
+  status: fixed
+
+- id: DEF-0023
+  title: Detector lot D-A2 dead pixel clusters
+  pattern: "dead pixels .* outside limits"
+  status: open

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Failure Triage</title>
+<style>
+  :root { color-scheme: light; --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+          --line:rgba(11,11,11,.1); --grid:#e1e0d9; --new:#2a78d6; --known:#898781; --regress:#d03b3b; --chip:#eceae4; }
+  @media (prefers-color-scheme: dark) {
+    :root { color-scheme: dark; --page:#0d0d0d; --surface:#1a1a19; --ink:#f0efec; --ink-2:#c3c2b7; --muted:#898781;
+            --line:rgba(255,255,255,.1); --grid:#2c2c2a; --new:#3987e5; --regress:#e66767; --chip:#2a2a28; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--page); color:var(--ink); font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:1050px; margin:0 auto; padding:28px 16px 56px; }
+  h1 { font-size:24px; margin:0 0 4px; }
+  .muted { color:var(--muted); }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:18px 0 24px; }
+  .tile { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 16px; }
+  .tile .v { font-size:26px; font-weight:650; } .tile .l { font-size:13px; color:var(--ink-2); }
+  .cluster { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:12px; }
+  .head { display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .num { font-weight:700; color:var(--muted); }
+  .count { font-weight:650; }
+  .tag { display:inline-block; padding:1px 9px; border-radius:999px; font-size:12px; font-weight:600; background:var(--chip); color:var(--ink-2); }
+  .NEW { color:var(--new); } .REGRESSION { color:var(--regress); } .known { color:var(--known); }
+  code, pre { font-family:ui-monospace,Consolas,monospace; font-size:13px; }
+  .sig { display:block; margin:8px 0; padding:8px 10px; background:var(--page); border-radius:8px; overflow-x:auto; white-space:pre-wrap; word-break:break-word; }
+  dl { display:grid; grid-template-columns:130px 1fr; gap:4px 12px; margin:8px 0 0; font-size:14px; }
+  dt { color:var(--muted); } dd { margin:0; }
+  .ai { border-left:3px solid var(--new); padding-left:10px; }
+  details summary { cursor:pointer; color:var(--ink-2); font-size:13px; margin-top:6px; }
+  ul.tight { margin:4px 0; padding-left:18px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Test failure triage</h1>
+  <div class="muted">{{ generated }} | test-log-triage {{ version }} | {{ sources|length }} result file(s)</div>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">{{ total }}</div><div class="l">failing results</div></div>
+    <div class="tile"><div class="v">{{ clusters|length }}</div><div class="l">distinct problems</div></div>
+    <div class="tile"><div class="v">{{ new }}</div><div class="l">new (no known issue)</div></div>
+    <div class="tile"><div class="v">{{ regressions }}</div><div class="l">regressions of fixed issues</div></div>
+  </div>
+  {% if llm_note %}<p class="muted">{{ llm_note }}</p>{% endif %}
+
+  {% for c in clusters %}
+  {% set st = status(c) %}
+  <section class="cluster">
+    <div class="head">
+      <span class="num">#{{ c.id }}</span>
+      <span class="count">{{ c.size }} failure{{ "s" if c.size != 1 }}</span>
+      <span class="tag {{ st.split()[0].rstrip(':') }}">{{ st }}</span>
+      <span class="tag">{{ c.category.replace("_", " ") }}</span>
+    </div>
+    <code class="sig">{{ c.signature }}</code>
+    <dl>
+      <dt>Next step</dt><dd>{{ c.next_step }}</dd>
+      {% if c.explanation %}
+      <dt>AI hypothesis</dt>
+      <dd class="ai">{{ c.explanation.likely_cause }} <span class="muted">({{ c.explanation.confidence }} confidence{% if c.explanation.category != c.category %}; suggests {{ c.explanation.category.replace("_", " ") }}{% endif %})</span><br>
+          <strong>Try:</strong> {{ c.explanation.next_step }}</dd>
+      {% endif %}
+      {% if c.known_issue %}<dt>Known issue</dt><dd>{{ c.known_issue.id }}: {{ c.known_issue.title }} ({{ c.known_issue.status }}){% if c.known_issue.link %} · <a href="{{ c.known_issue.link }}">link</a>{% endif %}</dd>{% endif %}
+      {% if c.related %}<dt>Possibly related</dt><dd>{% for rid, d in c.related %}#{{ rid }} <span class="muted">({{ "%.2f"|format(d) }})</span>{% if not loop.last %}, {% endif %}{% endfor %} <span class="muted">— similar wording, kept separate</span></dd>{% endif %}
+      <dt>Tests</dt><dd>{{ c.tests|length }} · {{ c.tests[:3]|join(", ") }}{% if c.tests|length > 3 %}, …{% endif %}</dd>
+      <dt>Seen in</dt><dd>{{ c.sources|join(", ") }}</dd>
+    </dl>
+    <details><summary>Sample messages</summary>
+      <ul class="tight">{% for s in c.samples(5) %}<li><code>{{ s }}</code></li>{% endfor %}</ul>
+    </details>
+  </section>
+  {% endfor %}
+</main>
+</body>
+</html>
